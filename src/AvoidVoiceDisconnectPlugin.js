@@ -18,16 +18,21 @@ export default class AvoidVoiceDisconnectPlugin extends FlexPlugin {
    * @param flex { typeof import('@twilio/flex-ui') }
    */
   async init(flex, manager) {
+    
+    // A function that prevents user from closing the Flex browser tab
     const beforeUnloadListener = (event) => {
       event.preventDefault();
       return (event.returnValue = "Are you sure you want to exit?");
     };
-
+    
+    // A listener to sense inbound/outbound call
     manager.voiceClient.on("incoming", (c) => {
-      addEventListener("beforeunload", beforeUnloadListener);
 
+      //When a call is received/created add the beforeunload event listener 
+      addEventListener("beforeunload", beforeUnloadListener);
+      
+      // Also add a listener that senses the call disconnect event and removes the beforeunload event listener
       c.on("disconnect", () => {
-        console.log("Hi There");
         removeEventListener("beforeunload", beforeUnloadListener);
       });
     });
