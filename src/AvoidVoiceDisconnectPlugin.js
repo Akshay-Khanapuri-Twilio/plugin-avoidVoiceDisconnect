@@ -23,12 +23,12 @@ export default class AvoidVoiceDisconnectPlugin extends FlexPlugin {
     };
 
     // A listener to sense inbound/outbound call
-    manager.voiceClient.on("incoming", (c) => {
+    manager.voiceClient.on("incoming", (call) => {
       //When a call is received/created add the beforeunload event listener
       addEventListener("beforeunload", beforeUnloadListener);
 
       // Also add a listener that senses the call disconnect event and removes the beforeunload event listener
-      c.on("disconnect", () => {
+      call.on("disconnect", () => {
         removeEventListener("beforeunload", beforeUnloadListener);
       });
     });
