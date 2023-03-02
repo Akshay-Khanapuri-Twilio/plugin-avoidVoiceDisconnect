@@ -19,7 +19,7 @@ export default class AvoidVoiceDisconnectPlugin extends FlexPlugin {
     // A function that prevents user from closing the Flex browser tab
     const beforeUnloadListener = (event) => {
       event.preventDefault();
-      return (event.returnValue = "Are you sure you want to exit?");
+      return (event.returnValue = "The call will disconnect if you close the tab. Are you sure you want to exit?");
     };
 
     // A listener to sense inbound/outbound call
